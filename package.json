@@ -1,22 +1,22 @@
 {
-  "name": "OpenShift-Sample-App",
-  "version": "1.0.0",
-  "description": "OpenShift Sample Application",
+  "name": "Heavy Gear Character Builder",
+  "version": "0.0.0",
+  "description": "Character builder for the new Heavy Gear RPG",
   "keywords": [
-    "OpenShift",
-    "Node.js",
-    "application",
-    "openshift"
+    "heavygear",
+    "character",
+    "builder",
+    "generator"
   ],
   "author": {
-    "name": "OpenShift",
-    "email": "ramr@example.org",
-    "url": "http://www.openshift.com/"
+    "name": "Daniel Hinds-Bond",
+    "email": "007@007design.com",
+    "url": "http://www.007design.com"
   },
-  "homepage": "http://www.openshift.com/",
+  "homepage": "http://hgcb-007design.rhcloud.com/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openshift/origin-server"
+    "url": "ssh://553162fb5973ca056800000d@hgcb-007design.rhcloud.com/~/git/hgcb.git/"
   },
 
   "engines": {
