@@ -35,7 +35,17 @@ var SampleApp = function() {
     };
 
     self.setupMongoose = function(){
-      mongoose.connect('mongodb://localhost/hgcb', function(err) {
+      self.mongoip = process.env.OPENSHIFT_MONGODB_DB_HOST;
+      self.mongoport = process.env.OPENSHIFT_MONGODB_DB_PORT || 27017;
+
+      if (typeof self.mongoip === "undefined") {
+            //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
+            //  allows us to run/test the app locally.
+            console.warn('No OPENSHIFT_MONGODB_DB_HOST var, using 127.0.0.1');
+            self.mongoip = "127.0.0.1";
+        };
+
+      mongoose.connect('mongodb://'+self.mongoip+':'+self.mongoport+'/hgcb', function(err) {
           if(err) {
               console.log('connection error', err);
           } else {
