@@ -2,7 +2,8 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
-
+var mongoose = require('mongoose');
+var User = require('./models.js')
 
 /**
  *  Define the sample application.
@@ -33,10 +34,20 @@ var SampleApp = function() {
         };
     };
 
+    self.setupMongoose = function(){
+      mongoose.connect('mongodb://localhost/hgcb', function(err) {
+          if(err) {
+              console.log('connection error', err);
+          } else {
+              console.log('connection successful');
+          }
+      });
+    };
+
 
     /**
      *  Populate the cache.
-     */
+     *
     self.populateCache = function() {
         if (typeof self.zcache === "undefined") {
             self.zcache = { 'index.html': '' };
@@ -45,14 +56,15 @@ var SampleApp = function() {
         //  Local cache for static content.
         self.zcache['index.html'] = fs.readFileSync('./index.html');
     };
+    */
 
 
     /**
      *  Retrieve entry (content) from cache.
      *  @param {string} key  Key identifying content to retrieve from cache.
-     */
+     *
     self.cache_get = function(key) { return self.zcache[key]; };
-
+    */
 
     /**
      *  terminator === the termination handler
@@ -95,14 +107,18 @@ var SampleApp = function() {
     self.createRoutes = function() {
         self.routes = { };
 
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
-
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
+            res.sendfile('src/index.html');
+        };
+
+        self.routes['/getUsers'] = function(req, resp){
+          console.log('getting users')
+            User.find(function(err, users){
+                if (err)
+                    console.log(err)
+                resp.json(users)
+            })
         };
     };
 
@@ -113,7 +129,8 @@ var SampleApp = function() {
      */
     self.initializeServer = function() {
         self.createRoutes();
-        self.app = express.createServer();
+        self.app = express();
+        self.app.use(express.static('./src'));
 
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
@@ -127,7 +144,8 @@ var SampleApp = function() {
      */
     self.initialize = function() {
         self.setupVariables();
-        self.populateCache();
+        // self.populateCache();
+        self.setupMongoose();
         self.setupTerminationHandlers();
 
         // Create the express server and routes.

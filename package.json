@@ -18,18 +18,17 @@
     "type": "git",
     "url": "ssh://553162fb5973ca056800000d@hgcb-007design.rhcloud.com/~/git/hgcb.git/"
   },
-
   "engines": {
-    "node": ">= 0.6.0",
+    "node": ">= 0.10.25",
     "npm": ">= 1.0.0"
   },
-
   "dependencies": {
-    "express": "~3.4.4"
+    "express": "~3.5.1",
+    "mongoose": "^4.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+  },
   "bundleDependencies": [],
-
   "private": true,
   "main": "server.js"
 }
