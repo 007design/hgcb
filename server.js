@@ -64,7 +64,7 @@ var SampleApp = function() {
 
       mongoose.connection.on('error', function(error){
           console.log("Error loading the db - "+ error);
-      }).on('disconnected', connect);
+      });
     };
 
 
