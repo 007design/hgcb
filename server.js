@@ -54,7 +54,7 @@ var SampleApp = function() {
       //       self.mongourl = "127.0.0.1:27017";
       //   };
 
-      mongoose.connect(self.mongourl, function(err) {
+      mongoose.connect(self.url, function(err) {
           if(err) {
               console.warn('connection error', err);
           } else {
