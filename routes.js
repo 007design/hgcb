@@ -29,9 +29,19 @@ routes.post['/newUser'] = function(req, res){
     })
   else
     newUser.save(function(err, u){
-      if (err)
+      if (!err)
+        res.json(u);
+
+      else if (err.code === 11000)
+        User.findOne(req.body, function(err, u){
+          if (err)
+            console.log(err);
+
+          res.json(u);
+        });
+
+      else
         console.log(err);
-      res.json(u);
     });
 };
 
