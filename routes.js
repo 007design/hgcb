@@ -21,11 +21,18 @@ routes.get['/getUsers'] = function(req, res){
 routes.post['/newUser'] = function(req, res){
   console.log('creating new user');
   var newUser = new User(req.body);
-  newUser.save(function(err, u){
-    if (err)
-      console.log(err);
-    res.json(u);
-  });
+
+  if (!newUser.email)
+    res.json({
+      result: 'error',
+      msg: 'Email is required'
+    })
+  else
+    newUser.save(function(err, u){
+      if (err)
+        console.log(err);
+      res.json(u);
+    });
 };
 
 module.exports = routes;
