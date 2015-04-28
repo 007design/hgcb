@@ -8,6 +8,10 @@
     "builder",
     "generator"
   ],
+  "scripts": {
+    "start": "node server.js",
+    "test": "node_modules/mocha/bin/mocha tests"
+  },
   "author": {
     "name": "Daniel Hinds-Bond",
     "email": "007@007design.com",
@@ -27,6 +31,8 @@
     "mongoose": "^4.0.1"
   },
   "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.4"
   },
   "bundleDependencies": [],
   "private": true,
