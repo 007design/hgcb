@@ -1,6 +1,7 @@
 #!/bin/env node
 //  OpenShift sample Node application
 var express = require('express');
+var bodyParser = require('body-parser');
 var fs    = require('fs');
 var mongoose = require('mongoose');
 var routes = require('./routes.js');
@@ -51,7 +52,7 @@ var AppServer = function() {
     });
 
     mongoose.connection.on('error', function(error){
-    console.log("Error loading the db - "+ error);
+      console.log("Error loading the db - "+ error);
     });
   };
 
@@ -96,11 +97,15 @@ var AppServer = function() {
    */
   self.initializeServer = function() {
     self.app = express();
+    self.app.use(bodyParser.json());
     self.app.use(express.static('./src'));
 
     //  Add handlers for the app (from the routes).
-    for (var r in routes) {
-      self.app.get(r, routes[r]);
+    for (var r in routes.get) {
+      self.app.get(r, routes.get[r]);
+    }
+    for (var r in routes.post) {
+      self.app.post(r, routes.post[r]);
     }
   };
 

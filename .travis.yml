@@ -2,6 +2,9 @@ language: node_js
 node_js:
   - "0.10"
 
+services:
+  - mongodb
+
 install:
   - "npm install -g npm"
   - "npm install"
