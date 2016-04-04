@@ -9,11 +9,6 @@ angular.module('app', [])
     restrict: 'C',
     scope: true,
     link: function(scope, elem) {
-      $($window).on('resize', function() {
-        if ($('.mobile-only').is(':visible'))
-          scope.showAccordion = false;
-        scope.$apply();
-      });
     }
   };
 }])

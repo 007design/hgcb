@@ -1,5 +1,9 @@
 body {
   color: $grey-dark;
+
+  @media print {
+  	font-size: 90%;
+  }
 }
 header {}
 footer {}
@@ -34,7 +38,7 @@ input.id-field-input {
 .section-identification {
 	.id-field {
 		position: relative;
-		margin-bottom: 1em;
+		margin: 0.5em 0 1em;
 
 		label {
 			position: absolute;
@@ -83,6 +87,10 @@ button {
 		@include span(1 of 12);
 		@include omega;
 
+		@media print {
+			display: none;
+		}
+
 		button.remove-skill-button:after {
 			content: '\f068';
 			font-family: $font-awesome;
@@ -91,6 +99,9 @@ button {
 	}
 	.add-skill-button {
 		margin-top: 0.5em;
+		@media print {
+			display: none;
+		}
 	}
 }
 
@@ -115,6 +126,10 @@ button {
 		background-color: $grey-light;
 		font-weight: 700;
 		border: 1px solid $grey-medium;
+
+		@media print {
+			padding: 0.25em;
+		}
 	}
 	.accordion-content {
 		display: none;
@@ -122,8 +137,13 @@ button {
 		border-left: 1px solid $grey-medium;
 		border-right: 1px solid $grey-medium;
 		border-bottom: 1px solid $grey-medium;
+
 		@include breakpoint($breakpoint-mobile) {
 			display: block;
+		}
+
+		@media print {
+			padding: 0.5em 0.5em 0.25em;
 		}
 	}
 

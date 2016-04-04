@@ -1,7 +1,7 @@
 $breakpoint-1024: 1024px;
 $breakpoint-800: 800px;
 
-$breakpoint-mobile: $breakpoint-800;
+$breakpoint-mobile: (screen $breakpoint-800, print 0px);
 
 $grey-dark: #666;
 $grey-medium: #cacaca;
