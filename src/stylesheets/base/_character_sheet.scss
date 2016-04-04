@@ -1,0 +1,129 @@
+.accordion {
+	@include breakpoint($breakpoint-mobile) {
+		margin-bottom: 0.5em;
+	}
+	.accordion-header {
+		padding: 0.5em;
+		background-color: $grey-light;
+		font-weight: 700;
+		border: 1px solid $grey-medium;
+
+		@media print {
+			padding: 0.25em;
+		}
+	}
+	.accordion-content {
+		display: none;
+		padding: 1em 1em 0.5em;
+		border-left: 1px solid $grey-medium;
+		border-right: 1px solid $grey-medium;
+		border-bottom: 1px solid $grey-medium;
+
+		@include breakpoint($breakpoint-mobile) {
+			display: block;
+		}
+
+		@media print {
+			padding: 0.5em 0.5em 0.25em;
+		}
+	}
+
+	&.active {
+		.accordion-content {
+			display: block;
+		}
+	}
+}
+
+.section-primary-traits,
+.section-secondary-traits {
+	.trait-field {
+		@include gallery(6 of 30);
+		text-align: center;
+		font-size: 0.8em;
+		font-weight: 700;
+		margin-bottom: 0.5em;
+
+		label {
+			text-transform: uppercase;
+		}
+	}
+}
+
+input.trait-field-input,
+input.skill-field-input,
+select.skill-field-input,
+input.id-field-input {
+	width: 100%;
+	font-weight: 700;
+	text-align: center;
+	background-color: $grey-light;
+	padding: 5px;
+	border: 1px solid $grey-medium;
+
+	@media print {
+		padding: 0;
+		border: none;
+	}
+}
+
+.section-identification {
+	.id-field {
+		position: relative;
+		margin: 0.5em 0 1em;
+
+		label {
+			position: absolute;
+			top: -12px;
+			left: 0;
+			font-size: 0.7em;
+		}
+
+		.id-field-input {
+			text-align: left;
+		}
+	}
+}
+
+.section-skills {
+	.skills-table-header {
+		font-weight: bold;
+		font-size: 0.8em;
+	}
+
+	.skill-field {
+		margin-bottom: 0.5em;
+	}
+
+	.skill-name {
+		@include span(9 of 12);
+	}
+	.skill-level {
+		@include span(1 of 12);
+		text-align: center;
+	}
+	.skill-modifier {
+		@include span(1 of 12);
+		text-align: center;
+	}
+	.remove-skill {
+		@include span(1 of 12);
+		@include omega;
+
+		@media print {
+			display: none;
+		}
+
+		button.remove-skill-button:after {
+			content: '\f068';
+			font-family: $font-awesome;
+			font-weight: 400;
+		}
+	}
+	.add-skill-button {
+		margin-top: 0.5em;
+		@media print {
+			display: none;
+		}
+	}
+}

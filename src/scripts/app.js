@@ -4,6 +4,10 @@
 
 angular.module('app', [])
 
+.config(['$locationProvider', function($locationProvider) {
+  $locationProvider.html5Mode({enabled:true,requireBase:false});
+}])
+
 .directive('accordion', ['$window', function($window) {
   return {
     restrict: 'C',
@@ -13,8 +17,41 @@ angular.module('app', [])
   };
 }])
 
-.service('dataSvc', [function() {
+.service('dataSvc', ['$http', '$location', function($http, $location) {
   var scope = this;
+  console.log($location.search());
+
+  if ($location.search().c)
+    $http({
+      url: '/getCharacter',
+      method: 'GET',
+      params: {c: $location.search().c},
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+  .success(function(result) {
+    if (result.status === 'success')
+      scope.character = result.character;
+  });
+
+  scope.saveCharacter = function() {
+    $http({
+      url: '/saveCharacter',
+      method: 'POST',
+      data: scope.character,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .success(function(result) {
+      if (result.redirect)
+        window.location.href = result.redirect;
+      else console.log(result);
+    })
+  };
 
   scope.skillsList = [
     'Acrobatics',
@@ -123,21 +160,14 @@ angular.module('app', [])
   return scope;
 }])
 
-.controller('IdentificationCtrl', ['$scope', 'dataSvc', function($scope, dataSvc) {
-  $scope.character = dataSvc.character;
-}])
-
-.controller('PrimaryTraitsCtrl', ['$scope', 'dataSvc', function($scope, dataSvc) {
-  $scope.primaryTraits = dataSvc.character.primaryTraits;
-}])
-
-.controller('SecondaryTraitsCtrl', ['$scope', 'dataSvc', function($scope, dataSvc) {
-  $scope.secondaryTraits = dataSvc.character.secondaryTraits;
-}])
-
-.controller('SkillsTableCtrl', ['$scope', 'dataSvc', function($scope, dataSvc) {
-  $scope.skills = dataSvc.character.skills;
+.controller('CharacterCtrl', ['$scope', 'dataSvc', function($scope, dataSvc) {
   $scope.skillsList = dataSvc.skillsList;
+
+  $scope.$watch(function() {
+    return dataSvc.character
+  }, function (c) {
+    $scope.character = c;
+  }, true);
 
   $scope.addSkill = function() {
     $scope.skills.push({});
@@ -145,5 +175,9 @@ angular.module('app', [])
 
   $scope.removeSkill = function(i) {
     $scope.skills.splice(i,1);
+  };
+
+  $scope.saveCharacter = function() {
+    dataSvc.saveCharacter();
   };
 }]);

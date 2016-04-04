@@ -37,26 +37,26 @@ var AppServer = function() {
     };
   };
 
-  // self.setupMongoose = function(){
-  //   self.url = '127.0.0.1:27017/hgcb';
+  self.setupMongoose = function(){
+    self.url = '127.0.0.1:27017/hgcb';
 
-  //   // if OPENSHIFT env variables are present, use the available connection info:
-  //   if (process.env.OPENSHIFT_MONGODB_DB_URL) {
-  //   self.url = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME;
-  //   }
+    // if OPENSHIFT env variables are present, use the available connection info:
+    if (process.env.OPENSHIFT_MONGODB_DB_URL) {
+    self.url = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME;
+    }
 
-  //   mongoose.connect(self.url, function(err) {
-  //   if(err) {
-  //     console.warn('connection error', err);
-  //   } else {
-  //     console.warn('connection successful');
-  //   }
-  //   });
+    mongoose.connect(self.url, function(err) {
+    if(err) {
+      console.warn('connection error', err);
+    } else {
+      console.warn('connection successful');
+    }
+    });
 
-  //   mongoose.connection.on('error', function(error){
-  //     console.log("Error loading the db - "+ error);
-  //   });
-  // };
+    mongoose.connection.on('error', function(error){
+      console.log("Error loading the db - "+ error);
+    });
+  };
 
   /**
    *  terminator === the termination handler
@@ -99,8 +99,9 @@ var AppServer = function() {
    */
   self.initializeServer = function() {
     self.app = express();
-    self.app.use(bodyParser.json());
-    // self.app.use(express.session({secret: 'heavygear'}));
+    // self.app.use(bodyParser.json());
+    self.app.use(express.cookieParser());
+    self.app.use(express.session({secret: 'heavygear'}));
     self.app.use(sassMiddleware({
       src: path.join(__dirname, 'src', 'stylesheets'),
       dest: path.join(__dirname, 'src', 'stylesheets'),
@@ -110,12 +111,18 @@ var AppServer = function() {
     }));
     self.app.use(express.static('./src'));
 
+    var jsonParser = bodyParser.json();
+    var formParser = bodyParser.urlencoded({ extended: false });
+
     //  Add handlers for the app (from the routes).
     for (var r in routes.get) {
-      self.app.get(r, routes.get[r]);
+      self.app.get(r, jsonParser, routes.get[r]);
     }
     for (var r in routes.post) {
-      self.app.post(r, routes.post[r]);
+      self.app.post(r, formParser, routes.post[r]);
+    }
+    for (var r in routes.ajax) {
+      self.app.post(r, jsonParser, routes.ajax[r]);
     }
   };
 
@@ -126,7 +133,7 @@ var AppServer = function() {
   self.initialize = function() {
     self.setupVariables();
     // self.populateCache();
-    // self.setupMongoose();
+    self.setupMongoose();
     self.setupTerminationHandlers();
 
     // Create the express server and routes.

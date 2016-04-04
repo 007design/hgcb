@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" data-ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Heavy Gear Character Builder</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/site.css">
+</head>
+<body data-ng-controller="CharacterCtrl">
+  
+  <header>
+    <button data-ng-click="saveCharacter()">Save</button>
+  </header>
+
+  <div class="page-container">
+    <div class="left-column">
+      <section class="accordion section-identification" data-ng-class="{'active':showAccordion}">
+        <div class="accordion-header" data-ng-click="showAccordion = !showAccordion">Identification</div>
+        <div class="accordion-content clearfix">
+          <div class="id-field">
+            <label for="id-field-name">Name</label>
+            <input type="text" id="id-field-name" class="id-field-input" data-ng-model="character.name">
+          </div>
+          <div class="id-field">
+            <label for="id-field-profession">Profession</label>
+            <input type="text" id="id-field-profession" class="id-field-input" data-ng-model="character.profession">
+          </div>
+          <div class="id-field">
+            <label for="id-field-rank">Rank</label>
+            <input type="text" id="id-field-rank" class="id-field-input" data-ng-model="character.rank">
+          </div>
+          <div class="id-field">
+            <label for="id-field-nationality">Nationality</label>
+            <input type="text" id="id-field-nationality" class="id-field-input" data-ng-model="character.nationality">
+          </div>
+          <div class="id-field">
+            <label for="id-field-unit">Unit</label>
+            <input type="text" id="id-field-unit" class="id-field-input" data-ng-model="character.unit">
+          </div>
+        </div>
+      </section>
+      <section class="accordion section-primary-traits" data-ng-class="{'active':showAccordion}">
+        <div class="accordion-header" data-ng-click="showAccordion = !showAccordion">Primary Traits</div>
+        <div class="accordion-content clearfix">
+          <div class="trait-field" data-ng-repeat="(key, val) in character.primaryTraits">
+            <label for="trait-field-{{key}}">{{key}}</label>
+            <input type="number" id="trait-field-{{key}}" class="trait-field-input" data-ng-model="val">
+          </div>
+        </div>
+      </section>
+      <section class="accordion section-secondary-traits" data-ng-class="{'active':showAccordion}">
+        <div class="accordion-header" data-ng-click="showAccordion = !showAccordion">Secondary Traits</div>
+        <div class="accordion-content clearfix">
+          <div class="trait-field" data-ng-repeat="(key, val) in character.secondaryTraits">
+            <label for="trait-field-{{key}}">{{key}}</label>
+            <input type="text" id="trait-field-{{key}}" class="trait-field-input" data-ng-model="val">
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="right-column">
+      <section class="accordion section-skills" data-ng-class="{'active':showAccordion}">
+        <div class="accordion-header" data-ng-click="showAccordion = !showAccordion">Skills</div>
+        <div class="accordion-content clearfix">
+          <div class="skills-table-header">
+            <div class="skill-name">NAME</div>
+            <div class="skill-level">LVL</div>
+            <div class="skill-modifier">+/-</div>
+          </div>
+          <div class="skill-field clearfix" data-ng-repeat="skill in character.skills">
+            <div class="skill-name">
+              <select data-ng-options="value for value in skillsList" class="skill-field-input" data-ng-model="skill.name">
+                <option>Select Skill</option>
+              </select>
+            </div>
+            <div class="skill-level">
+              <input type="text" class="skill-field-input" data-ng-model="skill.level">
+            </div>
+            <div class="skill-modifier">
+              <input type="text" class="skill-field-input" data-ng-model="skill.modifier">
+            </div>
+            <div class="remove-skill">
+              <button class="remove-skill-button" data-ng-click="removeSkill($index)"></button>
+            </div>
+          </div>
+          <button class="add-skill-button" data-ng-click="addSkill()">Add Skill</button>
+        </div>
+      </section>
+    </div>
+  </div>
+  
+  <footer></footer>
+
+  <div class="mobile-only"></div>
+  <div class="desktop-only"></div>
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+  <script type="text/javascript" src="scripts/app.js"></script>
+</body>
+</html>
