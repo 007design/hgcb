@@ -4,8 +4,10 @@
 
 angular.module('app', [])
 
-.config(['$locationProvider', function($locationProvider) {
+.config(['$interpolateProvider', '$locationProvider', function($interpolateProvider, $locationProvider) {
   $locationProvider.html5Mode({enabled:true,requireBase:false});
+  $interpolateProvider.startSymbol('{[{');
+  $interpolateProvider.endSymbol('}]}');
 }])
 
 .directive('accordion', ['$window', function($window) {
@@ -193,5 +195,9 @@ angular.module('app', [])
 
   $scope.logout = function() {
     window.location.href = '/logout';
+  };
+
+  $scope.login = function() {
+    window.location.href = '/';
   };
 }]);

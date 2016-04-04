@@ -13,10 +13,15 @@
   
   <header>
     <nav class="header-nav clearfix">
-      <button class="save-button" data-ng-click="saveCharacter()">Save</button>
-      <button class="new-button" data-ng-click="newCharacter()">New</button>
-      <button class="characters-button" data-ng-click="listCharacters()">Saved Characters</button>
-      <button class="logout-button" data-ng-click="logout()">Logout</button>
+      {{#user}}
+        <button class="save-button" data-ng-click="saveCharacter()">Save</button>
+        <button class="new-button" data-ng-click="newCharacter()">New</button>
+        <button class="characters-button" data-ng-click="listCharacters()">Saved Characters</button>
+        <button class="logout-button" data-ng-click="logout()">Logout</button>
+      {{/user}}
+      {{^user}}
+        <button class="logout-button" data-ng-click="login()">Login</button>
+      {{/user}}
     </nav>
   </header>
 
@@ -51,7 +56,7 @@
         <div class="accordion-header" data-ng-click="showAccordion = !showAccordion">Primary Traits</div>
         <div class="accordion-content clearfix">
           <div class="trait-field" data-ng-repeat="(key, val) in character.primaryTraits">
-            <label for="trait-field-{{key}}">{{key}}</label>
+            <label for="trait-field-{[{key}]}">{[{key}]}</label>
             <input type="number" id="trait-field-{{key}}" class="trait-field-input" data-ng-model="val">
           </div>
         </div>
@@ -60,7 +65,7 @@
         <div class="accordion-header" data-ng-click="showAccordion = !showAccordion">Secondary Traits</div>
         <div class="accordion-content clearfix">
           <div class="trait-field" data-ng-repeat="(key, val) in character.secondaryTraits">
-            <label for="trait-field-{{key}}">{{key}}</label>
+            <label for="trait-field-{[{key}]}">{[{key}]}</label>
             <input type="text" id="trait-field-{{key}}" class="trait-field-input" data-ng-model="val">
           </div>
         </div>

@@ -1,5 +1,7 @@
 "use strict";
 
+var fs = require('fs');
+var mustache = require('mustache');
 var User = require('./models.js').user;
 var Character = require('./models.js').character;
 var routes = {
@@ -28,10 +30,9 @@ routes.get['/characters'] = function(req, res) {
 
 routes.get['/characterSheet'] = function(req, res) {
   res.setHeader('Content-Type', 'text/html');
-  if (req.session.user)
-    res.sendfile('src/characterSheet.html');
-  else
-    res.redirect('/');
+  res.send(mustache.render(
+    fs.readFileSync('src/characterSheet.html', 'utf8'), { user: req.session.user }
+  ));
 };
 
 // routes.get['/getUsers'] = function(req, res) {
@@ -78,8 +79,14 @@ routes.ajax['/saveCharacter'] = function(req, res) {
   } else {
     console.log('saving character');
     var character = new Character(req.body);
-    character.user = req.session.user._id;
+
     if (req.body._id) {
+      if (req.session.user._id !== req.body.user)
+        return res.json({
+          'status': 'error',
+          'message': 'User does not own character'
+        });
+
       var id = req.body._id;
       delete req.body._id;
       Character.findByIdAndUpdate(id, req.body, function(err, c) {
@@ -95,6 +102,7 @@ routes.ajax['/saveCharacter'] = function(req, res) {
         }
       });
     } else
+      character.user = req.session.user._id;
       character.save(function(err, c) {
         if (err) {
           console.log(err);
