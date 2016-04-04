@@ -13,73 +13,46 @@
   <header></header>
 
   <div class="left-column">
+    <section class="accordion section-identification" data-ng-class="{'active':showAccordion}">
+      <div class="accordion-header" data-ng-click="showAccordion = !showAccordion">Identification</div>
+      <div class="accordion-content clearfix" data-ng-controller="IdentificationCtrl">
+        <div class="id-field">
+          <label for="id-field-name">Name</label>
+          <input type="text" id="id-field-name" class="id-field-input" data-ng-model="character.name">
+        </div>
+        <div class="id-field">
+          <label for="id-field-profession">Profession</label>
+          <input type="text" id="id-field-profession" class="id-field-input" data-ng-model="character.profession">
+        </div>
+        <div class="id-field">
+          <label for="id-field-rank">Rank</label>
+          <input type="text" id="id-field-rank" class="id-field-input" data-ng-model="character.rank">
+        </div>
+        <div class="id-field">
+          <label for="id-field-nationality">Nationality</label>
+          <input type="text" id="id-field-nationality" class="id-field-input" data-ng-model="character.nationality">
+        </div>
+        <div class="id-field">
+          <label for="id-field-unit">Unit</label>
+          <input type="text" id="id-field-unit" class="id-field-input" data-ng-model="character.unit">
+        </div>
+      </div>
+    </section>
     <section class="accordion section-primary-traits" data-ng-class="{'active':showAccordion}">
       <div class="accordion-header" data-ng-click="showAccordion = !showAccordion">Primary Traits</div>
-      <div class="accordion-content clearfix">
-        <div class="trait-field">
-          <label for="trait-field-agi">AGI</label>
-          <input type="text" id="trait-field-agi" class="trait-field-input">
-        </div>
-        <div class="trait-field">
-          <label for="trait-field-app">APP</label>
-          <input type="text" id="trait-field-app" class="trait-field-input">
-        </div>
-        <div class="trait-field">
-          <label for="trait-field-bld">BLD</label>
-          <input type="text" id="trait-field-bld" class="trait-field-input">
-        </div>
-        <div class="trait-field">
-          <label for="trait-field-cre">CRE</label>
-          <input type="text" id="trait-field-cre" class="trait-field-input">
-        </div>
-        <div class="trait-field">
-          <label for="trait-field-fit">FIT</label>
-          <input type="text" id="trait-field-fit" class="trait-field-input">
-        </div>
-        <div class="trait-field">
-          <label for="trait-field-inf">INF</label>
-          <input type="text" id="trait-field-inf" class="trait-field-input">
-        </div>
-        <div class="trait-field">
-          <label for="trait-field-kno">KNO</label>
-          <input type="text" id="trait-field-kno" class="trait-field-input">
-        </div>
-        <div class="trait-field">
-          <label for="trait-field-per">PER</label>
-          <input type="text" id="trait-field-per" class="trait-field-input">
-        </div>
-        <div class="trait-field">
-          <label for="trait-field-psy">PSY</label>
-          <input type="text" id="trait-field-psy" class="trait-field-input">
-        </div>
-        <div class="trait-field">
-          <label for="trait-field-wil">WIL</label>
-          <input type="text" id="trait-field-wil" class="trait-field-input">
+      <div class="accordion-content clearfix" data-ng-controller="PrimaryTraitsCtrl">
+        <div class="trait-field" data-ng-repeat="(key, val) in primaryTraits">
+          <label for="trait-field-{{key}}">{{key}}</label>
+          <input type="number" id="trait-field-{{key}}" class="trait-field-input" data-ng-model="val">
         </div>
       </div>
     </section>
     <section class="accordion section-secondary-traits" data-ng-class="{'active':showAccordion}">
       <div class="accordion-header" data-ng-click="showAccordion = !showAccordion">Secondary Traits</div>
-      <div class="accordion-content clearfix">
-        <div class="trait-field">
-          <label for="trait-field-str">STR</label>
-          <input type="text" id="trait-field-str" class="trait-field-input">
-        </div>
-        <div class="trait-field">
-          <label for="trait-field-hea">HEA</label>
-          <input type="text" id="trait-field-hea" class="trait-field-input">
-        </div>
-        <div class="trait-field">
-          <label for="trait-field-sta">STA</label>
-          <input type="text" id="trait-field-sta" class="trait-field-input">
-        </div>
-        <div class="trait-field">
-          <label for="trait-field-ud">UD</label>
-          <input type="text" id="trait-field-ud" class="trait-field-input">
-        </div>
-        <div class="trait-field">
-          <label for="trait-field-ad">AD</label>
-          <input type="text" id="trait-field-ad" class="trait-field-input">
+      <div class="accordion-content clearfix" data-ng-controller="SecondaryTraitsCtrl">
+        <div class="trait-field" data-ng-repeat="(key, val) in secondaryTraits">
+          <label for="trait-field-{{key}}">{{key}}</label>
+          <input type="text" id="trait-field-{{key}}" class="trait-field-input" data-ng-model="val">
         </div>
       </div>
     </section>
@@ -88,7 +61,7 @@
   <div class="right-column">
     <section class="accordion section-skills" data-ng-class="{'active':showAccordion}">
       <div class="accordion-header" data-ng-click="showAccordion = !showAccordion">Skills</div>
-      <div class="accordion-content clearfix skills-table">
+      <div class="accordion-content clearfix" data-ng-controller="SkillsTableCtrl">
         <div class="skills-table-header">
           <div class="skill-name">NAME</div>
           <div class="skill-level">LVL</div>
@@ -96,15 +69,15 @@
         </div>
         <div class="skill-field clearfix" data-ng-repeat="skill in skills">
           <div class="skill-name">
-            <select class="skill-field-input">
+            <select data-ng-options="value for value in skillsList" class="skill-field-input" data-ng-model="skill.name">
               <option>Select Skill</option>
             </select>
           </div>
           <div class="skill-level">
-            <input type="text" class="skill-field-input">
+            <input type="text" class="skill-field-input" data-ng-model="skill.level">
           </div>
           <div class="skill-modifier">
-            <input type="text" class="skill-field-input">
+            <input type="text" class="skill-field-input" data-ng-model="skill.modifier">
           </div>
           <div class="remove-skill">
             <button class="remove-skill-button" data-ng-click="removeSkill($index)"></button>
