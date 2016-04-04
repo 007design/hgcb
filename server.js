@@ -5,6 +5,8 @@ var bodyParser = require('body-parser');
 var fs    = require('fs');
 var mongoose = require('mongoose');
 var routes = require('./routes.js');
+var sassMiddleware = require('node-sass-middleware');
+var path = require('path');
 
 /**
  *  Define the sample application.
@@ -35,26 +37,26 @@ var AppServer = function() {
     };
   };
 
-  self.setupMongoose = function(){
-    self.url = '127.0.0.1:27017/hgcb';
+  // self.setupMongoose = function(){
+  //   self.url = '127.0.0.1:27017/hgcb';
 
-    // if OPENSHIFT env variables are present, use the available connection info:
-    if (process.env.OPENSHIFT_MONGODB_DB_URL) {
-    self.url = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME;
-    }
+  //   // if OPENSHIFT env variables are present, use the available connection info:
+  //   if (process.env.OPENSHIFT_MONGODB_DB_URL) {
+  //   self.url = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME;
+  //   }
 
-    mongoose.connect(self.url, function(err) {
-    if(err) {
-      console.warn('connection error', err);
-    } else {
-      console.warn('connection successful');
-    }
-    });
+  //   mongoose.connect(self.url, function(err) {
+  //   if(err) {
+  //     console.warn('connection error', err);
+  //   } else {
+  //     console.warn('connection successful');
+  //   }
+  //   });
 
-    mongoose.connection.on('error', function(error){
-      console.log("Error loading the db - "+ error);
-    });
-  };
+  //   mongoose.connection.on('error', function(error){
+  //     console.log("Error loading the db - "+ error);
+  //   });
+  // };
 
   /**
    *  terminator === the termination handler
@@ -98,6 +100,14 @@ var AppServer = function() {
   self.initializeServer = function() {
     self.app = express();
     self.app.use(bodyParser.json());
+    // self.app.use(express.session({secret: 'heavygear'}));
+    self.app.use(sassMiddleware({
+      src: path.join(__dirname, 'src', 'stylesheets'),
+      dest: path.join(__dirname, 'src', 'stylesheets'),
+      debug: true,
+      outputStyle: 'compressed',
+      prefix: '/stylesheets'
+    }));
     self.app.use(express.static('./src'));
 
     //  Add handlers for the app (from the routes).
@@ -116,7 +126,7 @@ var AppServer = function() {
   self.initialize = function() {
     self.setupVariables();
     // self.populateCache();
-    self.setupMongoose();
+    // self.setupMongoose();
     self.setupTerminationHandlers();
 
     // Create the express server and routes.
