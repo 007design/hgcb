@@ -13,6 +13,19 @@ routes.get['/'] = function(req, res) {
   res.sendfile('src/index.html');
 };
 
+routes.get['/logout'] = function(req, res) {
+  req.session.user = null;
+  res.redirect('/');
+};
+
+routes.get['/characters'] = function(req, res) {
+  res.setHeader('Content-Type', 'text/html');
+  if (req.session.user)
+    res.sendfile('src/characters.html');
+  else
+    res.redirect('/');
+};
+
 routes.get['/characterSheet'] = function(req, res) {
   res.setHeader('Content-Type', 'text/html');
   if (req.session.user)
@@ -21,18 +34,18 @@ routes.get['/characterSheet'] = function(req, res) {
     res.redirect('/');
 };
 
-routes.get['/getUsers'] = function(req, res) {
-  console.log('getting users');
-  User.find(function(err, users){
-    if (err)
-      console.log(err);
-    res.json(users);
-  });
-};
+// routes.get['/getUsers'] = function(req, res) {
+//   console.log('getting users');
+//   User.find(function(err, users){
+//     if (err)
+//       console.log(err);
+//     res.json(users);
+//   });
+// };
 
 routes.get['/getCharacters'] = function(req, res) {
   console.log('getting characters');
-  Character.find(function(err, characters){
+  Character.find({user: req.session.user._id}, function(err, characters){
     if (err)
       console.log(err);
     res.json(characters);
@@ -66,18 +79,62 @@ routes.ajax['/saveCharacter'] = function(req, res) {
     console.log('saving character');
     var character = new Character(req.body);
     character.user = req.session.user._id;
-    character.save(function(err, c) {
-      if (err) {
-        console.log(err);
-        res.json(err)
-      } else {
-        res.json({
-          'status': 'success',
-          'redirect': '/characterSheet?c='+c._id
-        })
-      }
-    });
+    if (req.body._id) {
+      var id = req.body._id;
+      delete req.body._id;
+      Character.findByIdAndUpdate(id, req.body, function(err, c) {
+        if (err) {
+          console.log(err);
+          res.json(err)
+        } else {
+          console.log(c);
+          res.json({
+            'status': 'success',
+            'redirect': '/characterSheet?c='+c._id
+          })
+        }
+      });
+    } else
+      character.save(function(err, c) {
+        if (err) {
+          console.log(err);
+          res.json(err)
+        } else {
+          res.json({
+            'status': 'success',
+            'redirect': '/characterSheet?c='+c._id
+          })
+        }
+      });
   }
+};
+
+routes.get['/deleteCharacter'] = function(req, res) {
+  if (!req.session.user)
+    return res.json({
+      'status': 'error',
+      'redirect': '/'
+    });
+
+  Character.findOne({'_id': req.query.c}, function(err, c) {
+    if (err) {
+      console.log(err);
+      res.json({
+        'status': 'error'
+      })
+    }
+  }).remove(function(err, c) {
+    if (err) {
+      console.log(err);
+      res.json({
+        'status': 'error'
+      })
+    } else {
+      res.json({
+        'status': 'success'
+      })
+    }
+  })
 };
 
 routes.post['/login'] = function(req, res) {

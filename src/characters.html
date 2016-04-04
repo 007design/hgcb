@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" data-ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Characters</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/site.css">
+</head>
+<body data-ng-controller="CharacterListCtrl">
+	<div class="page-container">
+		<div class="character-row clearfix" data-ng-repeat="character in characters">
+			<a href="/characterSheet?c={{character._id}}">{{character.name}}</a>
+      <button data-ng-click="deleteCharacter(character._id)">Delete</button>
+		</div>
+	</div>
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+  <script type="text/javascript" src="scripts/charactersList.js"></script>
+</body>
+</html>

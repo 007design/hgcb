@@ -1,0 +1,31 @@
+.login {
+	@include container(300px);
+	margin-bottom: 1em;
+	padding-bottom: 1em;
+	border-bottom: 1px solid $grey-medium;
+	margin-top: 1em;
+}
+
+.new-user {
+	@include container(300px);
+}
+
+.field-row {
+	margin: 1em 0;
+	position: relative;
+
+	label {
+		position: absolute;
+		top: -12px;
+		left: 0;
+		font-size: 0.7em;
+	}
+	input {
+		width: 100%;
+		font-weight: 700;
+		text-align: left;
+		background-color: $grey-light;
+		padding: 5px;
+		border: 1px solid $grey-medium;
+	}
+}

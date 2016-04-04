@@ -12,7 +12,12 @@
 <body data-ng-controller="CharacterCtrl">
   
   <header>
-    <button data-ng-click="saveCharacter()">Save</button>
+    <nav class="header-nav clearfix">
+      <button class="save-button" data-ng-click="saveCharacter()">Save</button>
+      <button class="new-button" data-ng-click="newCharacter()">New</button>
+      <button class="characters-button" data-ng-click="listCharacters()">Saved Characters</button>
+      <button class="logout-button" data-ng-click="logout()">Logout</button>
+    </nav>
   </header>
 
   <div class="page-container">
@@ -100,6 +105,6 @@
 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-  <script type="text/javascript" src="scripts/app.js"></script>
+  <script type="text/javascript" src="scripts/characterSheet.js"></script>
 </body>
 </html>

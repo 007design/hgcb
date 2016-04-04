@@ -1,0 +1,15 @@
+.character-row {
+	padding: 1em;
+	margin-bottom: 1em;
+	border: 1px solid $grey-medium;
+	background-color: $grey-light;
+
+	a {
+		float: left;
+	}
+
+	button {
+		float: right;
+		width: auto;
+	}
+}

@@ -11,20 +11,39 @@
 <body>
 	<div class="page-container">
 		<div class="login">
-		Login
 			<form action="/login" method="POST">
-				<input type="text" name="email">
-				<input type="password" name="password">
-				<button type="submit">Login</button>
+				<div class="field-row">
+					<label for="email">Email</label>
+					<input type="text" id="email" name="email" required>
+				</div>
+				<div class="field-row">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" required>
+				</div>
+				<div class="field-row">
+					<button type="submit">Login</button>
+				</div>
 			</form>
 		</div>
 
 		<div class="new-user">
 		New User
 			<form action="/newUser" method="POST">
-				<input type="text" name="email">
-				<input type="password" name="password">
-				<button type="submit">Create</button>
+				<div class="field-row">
+					<label for="email">Email</label>
+					<input type="text" id="email" name="email" required>
+				</div>
+				<div class="field-row">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" required>
+				</div>
+				<div class="field-row">
+					<label for="password">Retype Password</label>
+					<input type="password" id="password" name="password2" required>
+				</div>
+				<div class="field-row">
+					<button type="submit">New User</button>
+				</div>
 			</form>
 		</div>
 	</div>

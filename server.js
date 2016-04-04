@@ -103,13 +103,13 @@ var AppServer = function() {
     self.app.use(express.cookieParser());
     self.app.use(express.session({secret: 'heavygear'}));
     self.app.use(sassMiddleware({
-      src: path.join(__dirname, 'src', 'stylesheets'),
-      dest: path.join(__dirname, 'src', 'stylesheets'),
+      src: path.join(__dirname, 'src', 'assets', 'stylesheets'),
+      dest: path.join(__dirname, 'src', 'assets', 'stylesheets'),
       debug: true,
       outputStyle: 'compressed',
       prefix: '/stylesheets'
     }));
-    self.app.use(express.static('./src'));
+    self.app.use(express.static('./src/assets'));
 
     var jsonParser = bodyParser.json();
     var formParser = bodyParser.urlencoded({ extended: false });
