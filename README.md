@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/007design/hgcb.svg?branch=master)](https://travis-ci.org/007design/hgcb)
 
-This project is being hosted by [OpenShift](http://www.openshift.com)
+This project is being hosted using [OpenShift](http://www.openshift.com)
 
 Check it out here: [http://hgcb-007design.rhcloud.com/](http://hgcb-007design.rhcloud.com/)
 
