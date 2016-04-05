@@ -91,21 +91,18 @@ routes.ajax['/saveCharacter'] = function(req, res) {
       delete req.body._id;
       Character.findByIdAndUpdate(id, req.body, function(err, c) {
         if (err) {
-          console.log(err);
           res.json(err)
         } else {
-          console.log(c);
           res.json({
             'status': 'success',
             'redirect': '/characterSheet?c='+c._id
           })
         }
       });
-    } else
+    } else {
       character.user = req.session.user._id;
       character.save(function(err, c) {
         if (err) {
-          console.log(err);
           res.json(err)
         } else {
           res.json({
@@ -114,6 +111,7 @@ routes.ajax['/saveCharacter'] = function(req, res) {
           })
         }
       });
+    }
   }
 };
 

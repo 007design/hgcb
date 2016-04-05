@@ -32,41 +32,41 @@
         <div class="accordion-content clearfix">
           <div class="id-field">
             <label for="id-field-name">Name</label>
-            <input type="text" id="id-field-name" class="id-field-input" data-ng-model="character.name">
+            <input type="text" id="id-field-name" class="id-field-input" data-ng-model="dataSvc.character.name">
           </div>
           <div class="id-field">
             <label for="id-field-profession">Profession</label>
-            <input type="text" id="id-field-profession" class="id-field-input" data-ng-model="character.profession">
+            <input type="text" id="id-field-profession" class="id-field-input" data-ng-model="dataSvc.character.profession">
           </div>
           <div class="id-field">
             <label for="id-field-rank">Rank</label>
-            <input type="text" id="id-field-rank" class="id-field-input" data-ng-model="character.rank">
+            <input type="text" id="id-field-rank" class="id-field-input" data-ng-model="dataSvc.character.rank">
           </div>
           <div class="id-field">
             <label for="id-field-nationality">Nationality</label>
-            <input type="text" id="id-field-nationality" class="id-field-input" data-ng-model="character.nationality">
+            <input type="text" id="id-field-nationality" class="id-field-input" data-ng-model="dataSvc.character.nationality">
           </div>
           <div class="id-field">
             <label for="id-field-unit">Unit</label>
-            <input type="text" id="id-field-unit" class="id-field-input" data-ng-model="character.unit">
+            <input type="text" id="id-field-unit" class="id-field-input" data-ng-model="dataSvc.character.unit">
           </div>
         </div>
       </section>
       <section class="accordion section-primary-traits" data-ng-class="{'active':showAccordion}">
         <div class="accordion-header" data-ng-click="showAccordion = !showAccordion">Primary Traits</div>
         <div class="accordion-content clearfix">
-          <div class="trait-field" data-ng-repeat="(key, val) in character.primaryTraits">
+          <div class="trait-field" data-ng-repeat="(key, val) in dataSvc.character.primaryTraits">
             <label for="trait-field-{[{key}]}">{[{key}]}</label>
-            <input type="number" id="trait-field-{{key}}" class="trait-field-input" data-ng-model="val">
+            <input type="number" min="-5" max="5" id="trait-field-{{key}}" class="trait-field-input" data-ng-model="dataSvc.character.primaryTraits[key]">
           </div>
         </div>
       </section>
       <section class="accordion section-secondary-traits" data-ng-class="{'active':showAccordion}">
         <div class="accordion-header" data-ng-click="showAccordion = !showAccordion">Secondary Traits</div>
         <div class="accordion-content clearfix">
-          <div class="trait-field" data-ng-repeat="(key, val) in character.secondaryTraits">
+          <div class="trait-field" data-ng-repeat="(key, val) in dataSvc.character.secondaryTraits">
             <label for="trait-field-{[{key}]}">{[{key}]}</label>
-            <input type="text" id="trait-field-{{key}}" class="trait-field-input" data-ng-model="val">
+            <input type="number" min="-5" max="5" id="trait-field-{{key}}" class="trait-field-input" data-ng-model="dataSvc.character.secondaryTraits[key]">
           </div>
         </div>
       </section>
@@ -81,7 +81,7 @@
             <div class="skill-level">LVL</div>
             <div class="skill-modifier">+/-</div>
           </div>
-          <div class="skill-field clearfix" data-ng-repeat="skill in character.skills">
+          <div class="skill-field clearfix" data-ng-repeat="skill in dataSvc.character.skills">
             <div class="skill-name">
               <select data-ng-options="value for value in skillsList" class="skill-field-input" data-ng-model="skill.name">
                 <option>Select Skill</option>

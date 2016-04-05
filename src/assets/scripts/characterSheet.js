@@ -166,19 +166,14 @@ angular.module('app', [])
 
 .controller('CharacterCtrl', ['$scope', 'dataSvc', function($scope, dataSvc) {
   $scope.skillsList = dataSvc.skillsList;
-
-  $scope.$watch(function() {
-    return dataSvc.character
-  }, function (c) {
-    $scope.character = c;
-  }, true);
+  $scope.dataSvc = dataSvc;
 
   $scope.addSkill = function() {
-    $scope.character.skills.push({});
+    dataSvc.character.skills.push({});
   };
 
   $scope.removeSkill = function(i) {
-    $scope.character.skills.splice(i,1);
+    dataSvc.character.skills.splice(i,1);
   };
 
   $scope.saveCharacter = function() {
