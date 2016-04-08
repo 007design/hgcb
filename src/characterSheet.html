@@ -57,7 +57,7 @@
         <div class="accordion-content clearfix">
           <div class="trait-field" data-ng-repeat="(key, val) in dataSvc.character.primaryTraits">
             <label for="trait-field-{[{key}]}">{[{key}]}</label>
-            <input type="number" min="-5" max="5" id="trait-field-{{key}}" class="trait-field-input" data-ng-model="dataSvc.character.primaryTraits[key]">
+            <input type="number" min="-5" max="5" id="trait-field-{{key}}" class="trait-field-input primary-trait-field" data-ng-model="dataSvc.character.primaryTraits[key]">
           </div>
         </div>
       </section>
@@ -66,7 +66,7 @@
         <div class="accordion-content clearfix">
           <div class="trait-field" data-ng-repeat="(key, val) in dataSvc.character.secondaryTraits">
             <label for="trait-field-{[{key}]}">{[{key}]}</label>
-            <input type="number" min="-5" max="5" id="trait-field-{{key}}" class="trait-field-input" data-ng-model="dataSvc.character.secondaryTraits[key]">
+            <input type="number" min="-5" max="5" id="trait-field-{{key}}" class="trait-field-input" data-ng-model="dataSvc.character.secondaryTraits[key]" disabled>
           </div>
         </div>
       </section>
@@ -88,10 +88,10 @@
               </select>
             </div>
             <div class="skill-level">
-              <input type="text" class="skill-field-input" data-ng-model="skill.level">
+              <input type="number" class="skill-field-input" data-ng-model="skill.level">
             </div>
             <div class="skill-modifier">
-              <input type="text" class="skill-field-input" data-ng-model="skill.modifier">
+              <input type="number" class="skill-field-input" data-ng-model="skill.modifier">
             </div>
             <div class="remove-skill">
               <button class="remove-skill-button" data-ng-click="removeSkill($index)"></button>

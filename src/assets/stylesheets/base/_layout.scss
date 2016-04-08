@@ -21,6 +21,14 @@ header {
 }
 footer {}
 
+select {
+	@media print {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+	}
+}
+
 .page-container {
 	@include container($breakpoint-1024);
 }
