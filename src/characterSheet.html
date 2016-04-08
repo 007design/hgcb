@@ -100,6 +100,44 @@
           <button class="add-skill-button" data-ng-click="addSkill()">Add Skill</button>
         </div>
       </section>
+
+      <section class="accordion section-weapons" data-ng-class="{'active':showAccordion}">
+        <div class="accordion-header" data-ng-click="showAccordion = !showAccordion">Weapons</div>
+        <div class="accordion-content clearfix">
+          <div class="weapons-table-header">
+            <div class="weapon-name">Name</div>
+            <div class="weapon-accuracy">Acc</div>
+            <div class="weapon-damage">DMG</div>
+            <div class="weapon-range">Range</div>
+            <div class="weapon-ammo">Ammo</div>
+            <div class="weapon-rof">ROF</div>
+          </div>
+          <div class="weapon-field clearfix" data-ng-repeat="weapon in dataSvc.character.weapons">
+            <div class="weapon-name">
+              <input type="text" class="weapon-field-input" data-ng-model="weapon.name">
+            </div>
+            <div class="weapon-accuracy">
+              <input type="text" class="weapon-field-input" data-ng-model="weapon.accuracy">
+            </div>
+            <div class="weapon-damage">
+              <input type="text" class="weapon-field-input" data-ng-model="weapon.damage">
+            </div>
+            <div class="weapon-range">
+              <input type="text" class="weapon-field-input" data-ng-model="weapon.range" data-range-formatter>
+            </div>
+            <div class="weapon-ammo">
+              <input type="text" class="weapon-field-input" data-ng-model="weapon.ammo">
+            </div>
+            <div class="weapon-rof">
+              <input type="text" class="weapon-field-input" data-ng-model="weapon.rof">
+            </div>
+            <div class="remove-weapon">
+              <button class="remove-weapon-button" data-ng-click="removeWeapon($index)"></button>
+            </div>
+          </div>
+          <button class="add-weapon-button" data-ng-click="addWeapon()">Add Weapon</button>
+        </div>
+      </section>
     </div>
   </div>
   

@@ -158,7 +158,8 @@ angular.module('app', [])
       ud: 0,
       ad: 0
     },
-    skills: []
+    skills: [],
+    weapons: []
   };
 
   return scope;
@@ -174,6 +175,14 @@ angular.module('app', [])
 
   $scope.removeSkill = function(i) {
     dataSvc.character.skills.splice(i,1);
+  };
+
+  $scope.addWeapon = function() {
+    dataSvc.character.weapons.push({});
+  };
+
+  $scope.removeWeapon = function(i) {
+    dataSvc.character.weapons.splice(i,1);
   };
 
   $scope.saveCharacter = function() {
@@ -194,5 +203,14 @@ angular.module('app', [])
 
   $scope.login = function() {
     window.location.href = '/';
+  };
+}])
+
+.directive('rangeFormatter', [function() {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function(scope, elem, attrs, ngModel) {
+    }
   };
 }]);
